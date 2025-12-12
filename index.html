@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEZIAH</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="stadium-bg">
+            <div class="crowd-wave"></div>
+        </div>
+
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+
+        <div class="event-details">
+            <div class="tournament">I LOVE YOU</div>
+            <h1 class="match">KEZIAH TABRILLA</h1>
+            <div class="venue">Forever and Always</div>
+        </div>
+
+        <div class="countdown-wrapper">
+            <div class="countdown-container" id="countdown">
+                <div class="countdown-segment">
+                    <div class="segment-value" id="days">00</div>
+                    <div class="segment-label">Days</div>
+                </div>
+                <div class="countdown-segment">
+                    <div class="segment-value" id="hours">00</div>
+                    <div class="segment-label">Hours</div>
+                </div>
+                <div class="countdown-segment">
+                    <div class="segment-value" id="minutes">00</div>
+                    <div class="segment-label">Minutes</div>
+                </div>
+                <div class="countdown-segment">
+                    <div class="segment-value" id="seconds">00</div>
+                    <div class="segment-label">Seconds</div>
+                </div>
+            </div>
+        </div>
+
+
+        <button class="website-button" id="website-btn">VISIT MEMORIES</button>
+
+        <div class="ticker">
+            <div class="ticker-content">
+                <div class="ticker-item">My heart beats for <span class="ticker-highlight">you</span></div>
+                <div class="ticker-item">Every moment with you is <span class="ticker-highlight">magical</span></div>
+                <div class="ticker-item">You are my <span class="ticker-highlight">everything</span></div>
+                <div class="ticker-item">Forever yours, <span class="ticker-highlight">always</span></div>
+                <div class="ticker-item">My heart beats for <span class="ticker-highlight">you</span></div>
+                <div class="ticker-item">Every moment with you is <span class="ticker-highlight">magical</span></div>
+                <div class="ticker-item">You are my <span class="ticker-highlight">everything</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set the start date - a special date to count up from
+        const startDate = new Date('March 30, 2019 00:00:00 UTC').getTime(); // Change this to your special date
+
+        // Elements
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const countdownContainer = document.getElementById('countdown');
+        const reminderBtn = document.getElementById('reminder-btn');
+
+        // Random flare animation
+        function createFlares() {
+            const container = document.querySelector('.container');
+            const flareCount = 10;
+
+            for (let i = 0; i < flareCount; i++) {
+                const flare = document.createElement('div');
+                flare.className = 'flare';
+
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+
+                flare.style.left = `${posX}%`;
+                flare.style.top = `${posY}%`;
+
+                // Random delay
+                flare.style.animationDelay = `${Math.random() * 5}s`;
+
+                container.appendChild(flare);
+            }
+        }
+
+        // Create flares
+        createFlares();
+
+        // Update counter function
+        function updateCounter() {
+            const now = new Date().getTime();
+            const elapsed = now - startDate;
+
+            // Time calculations
+            const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((elapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+
+            // Add leading zeros
+            const formatNumber = num => num < 10 ? `0${num}` : num;
+
+            // Update DOM
+            daysEl.textContent = formatNumber(days);
+            hoursEl.textContent = formatNumber(hours);
+            minutesEl.textContent = formatNumber(minutes);
+            secondsEl.textContent = formatNumber(seconds);
+
+            // Beat animation on seconds change
+            secondsEl.classList.add('beat-animation');
+            setTimeout(() => {
+                secondsEl.classList.remove('beat-animation');
+            }, 500);
+        }
+
+        // Initial call
+        updateCounter();
+
+        // Update every second
+        const counter = setInterval(updateCounter, 1000);
+
+        // Reminder button functionality
+        reminderBtn.addEventListener('click', function() {
+            this.textContent = "LOVE YOU!";
+            this.classList.add('love-you');
+            setTimeout(() => {
+                this.textContent = "EXPLORE";
+                this.classList.remove('love-you');
+            }, 3000);
+
+            // Trigger more pulse rings on click
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 3; i++) {
+                const extraPulse = document.createElement('div');
+                extraPulse.className = 'pulse-ring';
+                extraPulse.style.animationDelay = `${i * 0.2}s`;
+                extraPulse.style.animationDuration = '1s';
+                container.appendChild(extraPulse);
+
+                // Remove the extra pulse after animation
+                setTimeout(() => {
+                    extraPulse.remove();
+                }, 1000);
+            }
+        });
+
+        // Website button functionality
+        const websiteBtn = document.getElementById('website-btn');
+        websiteBtn.addEventListener('click', function() {
+            window.open('https://example.com', '_blank');
+        });
+
+        // Make ticker content dynamic
+        const tickerContent = document.querySelector('.ticker-content');
+        const originalWidth = tickerContent.offsetWidth;
+        tickerContent.style.animationDuration = `${originalWidth / 50}s`;
+    </script>
+</body>
+</html>
